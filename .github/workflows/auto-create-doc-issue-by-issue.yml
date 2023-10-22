@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Log the event payload
-        run: echo "${{ github.event }}"
+        run: echo "${{ toJSON(github.event) }}"
       - name: Check if issue has 'done' and 'user-facing-changes'
         uses: dacbd/create-issue-action@main
         if: ${{ github.event.issue.event == 'done' && contains(github.event.issue.labels.*.name, 'user-facing-changes') }}
