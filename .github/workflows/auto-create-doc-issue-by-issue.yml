@@ -16,7 +16,7 @@ jobs:
         run: echo "${{ toJSON(github.event) }}"
       - name: Check if issue has 'done' and 'user-facing-changes'
         uses: dacbd/create-issue-action@main
-        if: ${{ github.event.issue.event == 'done' && contains(github.event.issue.labels.*.name, 'user-facing-changes') }}
+        if: ${{ github.event.action == 'closed' && contains(github.event.issue.labels.*.name, 'user-facing-changes') }}
         with:
           token: ${{ github.token }}
           owner: risingwavelabs
@@ -27,6 +27,5 @@ jobs:
             ## Context
             Source Issue URL: ${{ github.event.issue.url }}
             Created At: ${{ github.event.issue.created_at }}
-            Created By: ${{ github.event.issue.actor }}
-            Closed At: ${{ github.event.closed.created_at }}
-            Closed By: ${{ github.event.closed.actor }}
+            Created By: ${{ github.event.issue.user.login }}
+            Closed At: ${{ github.event.issue.closed_at }}
