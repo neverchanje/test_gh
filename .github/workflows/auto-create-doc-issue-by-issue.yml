@@ -14,11 +14,11 @@ jobs:
       - uses: actions/checkout@v3
       - name: Log the event payload
         run: echo "${{ toJSON(github.event) }}"
-      - name: Check if issue has 'done' and 'user-facing-changes'
+      - name: Check if issue is done and labeled 'user-facing-changes'
         uses: dacbd/create-issue-action@main
         if: ${{ github.event.action == 'closed' && contains(github.event.issue.labels.*.name, 'user-facing-changes') }}
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.ACCESS_TOKEN }}
           owner: risingwavelabs
           repo: risingwave-docs
           title: |
