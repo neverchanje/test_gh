@@ -1,0 +1,30 @@
+name: Issue Documentation Checker
+
+on:
+  issues:
+    types:
+      - closed
+      - labeled
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check if issue has 'done' and 'user-facing-changes'
+        uses: dacbd/create-issue-action@main
+        if: ${{ github.event.issue.labels.*.name == 'done' && contains(github.event.issue.labels.*.name, 'user-facing-changes') }}
+        with:
+          token: ${{ github.token }}
+          owner: risingwavelabs
+          repo: risingwave-docs
+          title: |
+            Document: ${{ github.event.issue.title }}
+          body: |
+            ## Context
+            Source Issue URL: ${{ github.event.issue.url }}
+            Created At: ${{ github.event.issue.created_at }}
+            Created By: ${{ github.event.issue.actor }}
+            Closed At: ${{ github.event.closed.created_at }}
+            Closed By: ${{ github.event.closed.actor }}
