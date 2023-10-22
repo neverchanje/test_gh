@@ -25,7 +25,7 @@ jobs:
             Document: ${{ github.event.issue.title }}
           body: |
             ## Context
-            Source Issue URL: ${{ github.event.issue.url }}
+            Source Issue URL: ${{ github.event.issue.html_url }}
             Created At: ${{ github.event.issue.created_at }}
             Created By: ${{ github.event.issue.user.login }}
             Closed At: ${{ github.event.issue.closed_at }}
